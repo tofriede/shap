@@ -16,7 +16,7 @@ from . import colors
 
 # TODO: remove unused title argument / use title argument
 def summary_plot(shap_values, features=None, feature_names=None, max_display=None, plot_type=None,
-                 color=None, axis_color="#333333", title=None, alpha=1, show=True, sort=True,
+                 log_scale=False, linthreshx=None, color=None, axis_color="#333333", title=None, alpha=1, show=True, sort=True,
                  color_bar=True, plot_size="auto", layered_violin_max_num_bins=20, class_names=None,
                  class_inds=None,
                  color_bar_label=labels["FEATURE_VALUE"],
@@ -120,7 +120,7 @@ def summary_plot(shap_values, features=None, feature_names=None, max_display=Non
 
             return summary_plot(
                 new_shap_values, new_features, new_feature_names,
-                max_display=max_display, plot_type="dot", color=color, axis_color=axis_color,
+                max_display=max_display, plot_type="dot", log_scale=log_scale, linthreshx=linthreshx, color=color, axis_color=axis_color,
                 title=title, alpha=alpha, show=show, sort=sort,
                 color_bar=color_bar, plot_size=plot_size, class_names=class_names,
                 color_bar_label="*" + color_bar_label
@@ -149,6 +149,8 @@ def summary_plot(shap_values, features=None, feature_names=None, max_display=Non
             proj_shap_values, features[:, sort_inds] if features is not None else None,
             feature_names=feature_names[sort_inds],
             sort=False, show=False, color_bar=False,
+            log_scale=log_scale,
+            linthreshx=linthreshx,
             plot_size=None,
             max_display=max_display
         )
@@ -167,6 +169,8 @@ def summary_plot(shap_values, features=None, feature_names=None, max_display=Non
                 sort=False,
                 feature_names=["" for i in range(len(feature_names))],
                 show=False,
+                log_scale=log_scale,
+                linthreshx=linthreshx
                 color_bar=False,
                 plot_size=None,
                 max_display=max_display
@@ -178,6 +182,8 @@ def summary_plot(shap_values, features=None, feature_names=None, max_display=Non
             pl.title(shorten_text(feature_names[ind], title_length_limit))
         pl.tight_layout(pad=0, w_pad=0, h_pad=0.0)
         pl.subplots_adjust(hspace=0, wspace=0.1)
+        if log_scale:
+            pl.xscale('symlog', linthreshx=linthreshx)
         if show:
             pl.show()
         return
@@ -479,6 +485,8 @@ def summary_plot(shap_values, features=None, feature_names=None, max_display=Non
         pl.xlabel(labels['GLOBAL_VALUE'], fontsize=13)
     else:
         pl.xlabel(labels['VALUE'], fontsize=13)
+    if log_scale:
+        pl.xscale('symlog', linthreshx=linthreshx)
     if show:
         pl.show()
 
