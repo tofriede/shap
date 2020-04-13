@@ -16,7 +16,7 @@ from . import colors
 
 # TODO: remove unused title argument / use title argument
 def summary_plot(shap_values, features=None, feature_names=None, max_display=None, plot_type=None,
-                 log_scale=False, linthreshx=None, color=None, axis_color="#333333", title=None, alpha=1, show=True, sort=True,
+                 log_scale=False, linthreshx=0, color=None, axis_color="#333333", title=None, alpha=1, show=True, sort=True,
                  color_bar=True, plot_size="auto", layered_violin_max_num_bins=20, class_names=None,
                  class_inds=None,
                  color_bar_label=labels["FEATURE_VALUE"],
