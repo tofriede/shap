@@ -170,7 +170,7 @@ def summary_plot(shap_values, features=None, feature_names=None, max_display=Non
                 feature_names=["" for i in range(len(feature_names))],
                 show=False,
                 log_scale=log_scale,
-                linthreshx=linthreshx
+                linthreshx=linthreshx,
                 color_bar=False,
                 plot_size=None,
                 max_display=max_display
